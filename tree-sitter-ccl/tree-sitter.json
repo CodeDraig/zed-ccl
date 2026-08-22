@@ -1,0 +1,33 @@
+{
+  "grammars": [
+    {
+      "name": "ccl",
+      "camelcase": "Ccl",
+      "scope": "source.ccl",
+      "path": ".",
+      "file-types": ["ccl", "prg"],
+      "injection-regex": "^ccl$"
+    }
+  ],
+  "metadata": {
+    "version": "0.2.0",
+    "license": "MIT",
+    "description": "Modern Cerner Command Language grammar",
+    "authors": [
+      {
+        "name": "Thomas Jones"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/CodeDraig/zed-ccl"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "node": false,
+    "python": false,
+    "rust": false,
+    "swift": false,
+    "go": false
+  }
+}

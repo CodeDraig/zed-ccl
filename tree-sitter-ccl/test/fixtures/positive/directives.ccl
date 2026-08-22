@@ -1,0 +1,42 @@
+%BANNER
+%B
+%CLEAR
+%C
+%DISPLAY
+%D
+%EDIT synthetic_source.inc
+%E synthetic_source.inc
+%HELP
+%H
+%INCLUDE synthetic_source.inc
+%I synthetic_source.inc
+%JOURNAL
+%J
+%KEDIT
+%K
+%LEDIT synthetic_editor
+%L synthetic_editor
+%MODULE synthetic_module
+%M synthetic_module
+%OUTPUT synthetic_output.txt
+%O synthetic_output.txt
+%PRINT synthetic message
+%P synthetic message
+%RUN synthetic_source.inc
+%R synthetic_source.inc
+%SHOW
+%S
+%TERMINAL
+%T
+%VERSION
+%V
+%Z
+%#DEFINE SYNTHETIC_FEATURE
+%#DEF SYNTHETIC_ALIAS_FEATURE
+%#IFDEF SYNTHETIC_FEATURE
+%#ELSE
+%#ENDIF
+%#IFNDEF OTHER_SYNTHETIC_FEATURE
+%#ENDIF
+%#UNDEF SYNTHETIC_FEATURE
+GO

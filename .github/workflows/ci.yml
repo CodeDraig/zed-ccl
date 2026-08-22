@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: tree-sitter-ccl/package-lock.json
+
+      - name: Install dependencies
+        working-directory: tree-sitter-ccl
+        run: npm ci
+
+      - name: Validate parser and Zed queries
+        working-directory: tree-sitter-ccl
+        run: npm run check
+
+      - name: Check generated parser sources
+        working-directory: tree-sitter-ccl
+        run: npm run check:generated

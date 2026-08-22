@@ -1,0 +1,18 @@
+{
+  "for-step.ccl": [0, 21],
+  "indented-directive.ccl": [0, 2],
+  "indented-bang.ccl": [0, 2],
+  "nested-comment.ccl": [0, 22],
+  "no-argument-directive-text.ccl": [0, 8],
+  "positional-double-zero.ccl": [0, 12],
+  "positional-hundred.ccl": [0, 15],
+  "positional-zero.ccl": [0, 12],
+  "reversed-declare.ccl": [0, 0],
+  "required-directive-comment-only.ccl": [0, 0],
+  "required-directive-missing.ccl": [0, 0],
+  "set-operand-plan.ccl": [5, 2],
+  "sql-selection-alias.ccl": [0, 19],
+  "unknown-directive.ccl": [0, 0],
+  "unparenthesized-set.ccl": [2, 0],
+  "unsupported.ccl": [0, 0]
+}

@@ -1,0 +1,12 @@
+! first-column comment
+%include synthetic_source.inc
+SET TEXT_VALUE = 'single'
+SET TEXT_VALUE = "double"
+SET TEXT_VALUE = ^caret^
+SET TEXT_VALUE = ~tilde~
+SET TEXT_VALUE = |bar|
+SET TEXT_VALUE = @5:value@
+SET LARGE_ID = 42.W
+SET CONTINUED = 1 + \
+  2 ; comment after a continued expression
+GO

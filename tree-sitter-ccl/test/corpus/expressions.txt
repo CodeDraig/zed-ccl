@@ -1,0 +1,107 @@
+==================
+Logical and arithmetic precedence
+==================
+
+SET RESULT = A OR B AND NOT C = D
+SET TOTAL = 1 + 2 * 3 ** 4
+SET NULL_CHECK = VALUE IS NOT NULL
+SET DIFFERENT = LEFT_VALUE != RIGHT_VALUE
+
+---
+
+(source_file
+  (set_statement
+    (assignable_expression
+      (identifier))
+    (binary_expression
+      (identifier)
+      (binary_expression
+        (identifier)
+        (not_expression
+          (comparison_expression
+            (identifier)
+            (identifier))))))
+  (set_statement
+    (assignable_expression
+      (identifier))
+    (binary_expression
+      (literal
+        (integer_literal))
+      (binary_expression
+        (literal
+          (integer_literal))
+        (binary_expression
+          (literal
+            (integer_literal))
+          (literal
+            (integer_literal))))))
+  (set_statement
+    (assignable_expression
+      (identifier))
+    (comparison_expression
+      (identifier)
+      (literal
+        (null_literal))))
+  (set_statement
+    (assignable_expression
+      (identifier))
+    (comparison_expression
+      (identifier)
+      (identifier))))
+
+==================
+Postfix access and SEQ distinction
+==================
+
+SET VALUE = RESULT_RS->ROWS[INDEX].DISPLAY
+SET PSEUDO = SEQ
+SET FUNCTION_RESULT = SEQ()
+
+---
+
+(source_file
+  (set_statement
+    (assignable_expression
+      (identifier))
+    (member_expression
+      (subscript_expression
+        (member_expression
+          (identifier)
+          (identifier))
+        (identifier))
+      (identifier)))
+  (set_statement
+    (assignable_expression
+      (identifier))
+    (pseudo_column))
+  (set_statement
+    (assignable_expression
+      (identifier))
+    (call_expression
+      (identifier))))
+
+==================
+Named and positional prompt parameters
+==================
+
+SET FIRST_VALUE = $1
+SET LAST_VALUE = $99
+SET NAMED_VALUE = $OUTDEV
+GO
+
+---
+
+(source_file
+  (set_statement
+    (assignable_expression
+      (identifier))
+    (prompt_parameter))
+  (set_statement
+    (assignable_expression
+      (identifier))
+    (prompt_parameter))
+  (set_statement
+    (assignable_expression
+      (identifier))
+    (prompt_parameter))
+  (go_command))

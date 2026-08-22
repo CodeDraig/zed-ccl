@@ -1,0 +1,74 @@
+==================
+Variables arrays and records
+==================
+
+DECLARE COUNT = I4 WITH NOCONSTANT(0), PROTECT
+DECLARE LABELS[10, 2] = C20
+RECORD RESULT_RS (
+1 ROWS[*]
+2 PERSON_ID = F8
+2 NAME = VC
+) WITH PRIVATE
+
+---
+
+(source_file
+  (declaration
+    (variable_declaration
+      (qualified_identifier
+        (identifier))
+      (data_type)
+      (declaration_options
+        (declaration_option
+          (literal
+            (integer_literal)))
+        (declaration_option))))
+  (declaration
+    (array_declaration
+      (qualified_identifier
+        (identifier))
+      (integer_literal)
+      (integer_literal)
+      (data_type)))
+  (record_definition
+    (qualified_identifier
+      (identifier))
+    (record_field
+      (integer_literal)
+      (identifier)
+      (record_extent))
+    (record_field
+      (integer_literal)
+      (identifier)
+      (data_type))
+    (record_field
+      (integer_literal)
+      (identifier)
+      (data_type))
+    (scope_option)))
+
+==================
+Modern subroutine signature
+==================
+
+SUBROUTINE (SAMPLE(ARG = I4(VALUE, 0)) = I4 WITH PRIVATE)
+  RETURN(ARG)
+END
+
+---
+
+(source_file
+  (subroutine_definition
+    (qualified_identifier
+      (identifier))
+    (parameter_list
+      (parameter
+        (identifier)
+        (data_type)
+        (literal
+          (integer_literal))))
+    (data_type)
+    (declaration_options
+      (declaration_option))
+    (return_statement
+      (identifier))))

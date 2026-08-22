@@ -1,0 +1,120 @@
+==================
+ReportWriter lifecycle sections
+==================
+
+SELECT INTO "MINE" P.PERSON_ID
+FROM PERSON P
+HEAD REPORT
+  ROW + 1
+HEAD PAGE
+  COL 0 "Person"
+DETAIL
+  COL 0 P.PERSON_ID
+FOOT REPORT
+  COL 0 COUNT(SEQ)
+WITH FORMAT, NOCOUNTER
+GO
+
+---
+
+(source_file
+  (select_statement
+    (select_query
+      (into_clause
+        (literal
+          (string_literal)))
+      (selection_item
+        (member_expression
+          (identifier)
+          (identifier)))
+      (from_clause
+        (from_item
+          (table_reference
+            (qualified_identifier
+              (identifier))
+            (identifier)))))
+    (reportwriter_section
+      (head_report_section
+        (row_statement
+          (unary_expression
+            (literal
+              (integer_literal))))))
+    (reportwriter_section
+      (head_page_section
+        (col_statement
+          (literal
+            (integer_literal))
+          (literal
+            (string_literal)))))
+    (reportwriter_section
+      (detail_section
+        (col_statement
+          (literal
+            (integer_literal))
+          (member_expression
+            (identifier)
+            (identifier)))))
+    (reportwriter_section
+      (foot_report_section
+        (col_statement
+          (literal
+            (integer_literal))
+          (call_expression
+            (identifier)
+            (pseudo_column)))))
+    (select_options
+      (control_option
+        (identifier))
+      (control_option
+        (identifier))))
+  (go_command))
+
+==================
+Directive inside ReportWriter
+==================
+
+SELECT INTO "nl:" D.SEQ
+FROM DUMMYT D
+HEAD REPORT
+%MODULE synthetic_wrapper.inc
+DETAIL
+  COL 0 D.SEQ
+WITH FORMAT
+GO
+
+---
+
+(source_file
+  (select_statement
+    (select_query
+      (into_clause
+        (literal
+          (string_literal)))
+      (selection_item
+        (member_expression
+          (identifier)
+          (identifier)))
+      (from_clause
+        (from_item
+          (table_reference
+            (qualified_identifier
+              (identifier))
+            (identifier)))))
+    (reportwriter_section
+      (head_report_section
+        (directive
+          (directive_marker)
+          (directive_name)
+          (directive_arguments))))
+    (reportwriter_section
+      (detail_section
+        (col_statement
+          (literal
+            (integer_literal))
+          (member_expression
+            (identifier)
+            (identifier)))))
+    (select_options
+      (control_option
+        (identifier))))
+  (go_command))

@@ -1,0 +1,39 @@
+{
+  "name": "tree-sitter-ccl",
+  "version": "0.2.0",
+  "description": "Tree-sitter grammar for modern Cerner Command Language (CCL)",
+  "license": "MIT",
+  "keywords": [
+    "tree-sitter",
+    "ccl",
+    "cerner"
+  ],
+  "files": [
+    "grammar.js",
+    "tree-sitter.json",
+    "src/**",
+    "queries/**"
+  ],
+  "scripts": {
+    "generate": "tree-sitter generate",
+    "test": "tree-sitter test",
+    "test:update": "tree-sitter test --update",
+    "parse:fixtures": "node scripts/check-fixtures.mjs",
+    "check:parser-contract": "node scripts/check-parser-contract.mjs",
+    "check:queries": "node scripts/check-queries.mjs",
+    "check:generated": "npm run generate && git diff --exit-code -- src",
+    "check": "npm run generate && npm run test && npm run parse:fixtures && npm run check:parser-contract && npm run check:queries"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "0.26.11"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.ccl",
+      "file-types": [
+        "ccl",
+        "prg"
+      ]
+    }
+  ]
+}

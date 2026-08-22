@@ -1,0 +1,117 @@
+range      = table_name | alias;
+table      = range;
+field      = [table '.'] field_name;
+
+(* Psuedo Tables and Columns *)
+(* https://wiki.cerner.com/display/public/1101discernHP/Using+the+DUMMYT+Table+using+Discern+Explorer *)
+(* https://wiki.cerner.com/display/public/1101discernHP/DEFINE+using+Discern+Explorer *)
+(* https://wiki.cerner.com/display/public/1101discernHP/The+SEQ+Pseudo+Column+using+Discern+Explorer *)
+pseudo_table = ('DUMMYT'|'RTL'|'RTL2'|'RTL3');
+pseudo_field = 'SEQ';
+
+(* display_options   - https://wiki.cerner.com/display/public/1101discernHP/Display+Options+using+Discern+Explorer *)
+(* display_template  - https://wiki.cerner.com/display/public/1101discernHP/Display+Template+Using+Discern+Explorer *)
+(* display_qualifier - https://wiki.cerner.com/display/public/1101discernHP/Display+Qualifier+using+Discern+Explorer *)
+(* display_format    - https://wiki.cerner.com/display/public/1101discernHP/Display+Format+using+Discern+Explorer *)
+display_options = '"' display_template ';' display_qualifier ';' , display_format '"';
+
+(* https://wiki.cerner.com/display/public/1101discernHP/Programming+Constructs+using+Discern+Explorer *)
+prog_command =
+    if_command |
+    case_command |
+    while_command |
+    for_command |
+    execute_command |
+    goto_command
+;
+
+(* https://wiki.cerner.com/display/public/1101discernHP/CALL+Commands+using+Discern+Explorer *)
+call_command =
+    call_accept_command |
+    call_box_command |
+    call_cancel_command |
+    call_center_command |
+    call_clear_command |
+    call_compile_command |
+    call_dcl_command |
+    call_debug_command |
+    call_echo_command |
+    call_echorecord_command |
+    call_echoxml_command |
+    call_edit_command |
+    call_line_command |
+    call_parser_command |
+    call_pause_command |
+    call_print_command |
+    call_printimage_command |
+    call_scrolldown_command |
+    call_scrollinit_command |
+    call_scrolltext_command |
+    call_scrollup_command |
+    call_text_command |
+    call_trace_command |
+    call_video_command
+;
+
+(* https://wiki.cerner.com/display/public/1101discernHP/SET+Commands+Using+Discern+Explorer *)
+set_command =
+    set_accept_command |
+    set_error_command |
+    set_spool_command |
+    set_break_command |
+    set_help_command |
+    set_trace_command |
+    set_compile_command |
+    set_home_command |
+    set_transaction_command |
+    set_curaccept_command |
+    set_logical_command |
+    set_type_command |
+    set_curalias_command |
+    set_maxcolwidth_command |
+    set_validate_command |
+    set_curhelp_command |
+    set_message_command |
+    set_variable_command |
+    set_curlocale_command |
+    set_modify_command |
+    set_views_command |
+    set_curscope_command |
+    set_priority_command |
+    set_warining_command |
+    set_dir_command |
+    set_row_command |
+    set_width_command |
+    set_doc_command |
+    set_source_command |
+    set_window_command
+;
+
+(* https://wiki.cerner.com/display/1101discernHP/PARAMETER+using+Discern+Explorer *)
+(*
+   parameter_number - the parameter to fetch; parameters are numbered sequentially from left to right starting with 1
+   list_number - the list item to fetch; list items are numbered sequentially from left to right starting with 1; 0 if parameter is not a list
+*)
+parameter = '$' digit {digit} | '$' identifier;
+parameter_function = 'PARAMETER' '(' paremeter_number ',' list_number ')';
+
+(* https://wiki.cerner.com/display/1101discernHP/Control+Options+using+Discern+Explorer *)
+(* https://wiki.cerner.com/display/public/1101discernHP/Defining+Control+Options+Using+the+WITH+Clause+using+Discern+Explorer *)
+control_option =
+    single_word_control_option |
+    function_control_option '(' param {',' param} ')' |
+    assign_control_option '=' expression
+;
+
+(*
+Function:
+    Subroutines used in a Discern Explorer query to perform
+    specific tasks, such as calculating an average.
+
+Run-time Library Routines:
+    Discern Explorer programs that can be accessed from a program
+    written in a different programming language (such as COBOL or C).
+    The Discern Explorer program functions as if it had been
+    accessed from the keyboard.
+*)
+

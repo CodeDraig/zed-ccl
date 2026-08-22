@@ -1,0 +1,183 @@
+==================
+String delimiters and numeric forms
+==================
+
+SET A = 'single'
+SET B = "double"
+SET C = ^caret^
+SET D = ~tilde~
+SET E = |bar|
+SET F = @5:value@
+SET G = 42.W
+
+---
+
+(source_file
+  (set_statement
+    (assignable_expression
+      (identifier))
+    (literal
+      (string_literal)))
+  (set_statement
+    (assignable_expression
+      (identifier))
+    (literal
+      (string_literal)))
+  (set_statement
+    (assignable_expression
+      (identifier))
+    (literal
+      (string_literal)))
+  (set_statement
+    (assignable_expression
+      (identifier))
+    (literal
+      (string_literal)))
+  (set_statement
+    (assignable_expression
+      (identifier))
+    (literal
+      (string_literal)))
+  (set_statement
+    (assignable_expression
+      (identifier))
+    (literal
+      (string_literal)))
+  (set_statement
+    (assignable_expression
+      (identifier))
+    (literal
+      (wide_integer_literal))))
+
+==================
+Documented comments
+==================
+
+! column-zero bang
+SET A = 1 ; inline semicolon
+; column-zero semicolon
+/* non-nested block */
+GO
+
+---
+
+(source_file
+  (bang_comment)
+  (set_statement
+    (assignable_expression
+      (identifier))
+    (literal
+      (integer_literal)))
+  (semicolon_comment)
+  (semicolon_comment)
+  (block_comment)
+  (go_command))
+
+==================
+Directive arity and trailing comments
+==================
+
+%DISPLAY ; optional argument omitted
+%#DEF FEATURE_FLAG ; required argument present
+%SHOW ; no argument permitted
+GO
+
+---
+
+(source_file
+  (directive
+    (directive_marker)
+    (directive_name))
+  (semicolon_comment)
+  (directive
+    (directive_marker)
+    (directive_name)
+    (directive_arguments))
+  (semicolon_comment)
+  (directive
+    (directive_marker)
+    (directive_name))
+  (semicolon_comment)
+  (go_command))
+
+==================
+Column-sensitive comment continuation
+==================
+
+SET A = 1 ; continued comment \
+still part of the comment
+; column-zero comment does not continue \
+SET B = 2
+! column-zero bang does not continue \
+SET C = 3
+GO
+
+---
+
+(source_file
+  (set_statement
+    (assignable_expression
+      (identifier))
+    (literal
+      (integer_literal)))
+  (semicolon_comment)
+  (semicolon_comment)
+  (set_statement
+    (assignable_expression
+      (identifier))
+    (literal
+      (integer_literal)))
+  (bang_comment)
+  (set_statement
+    (assignable_expression
+      (identifier))
+    (literal
+      (integer_literal)))
+  (go_command))
+
+==================
+Documented directives and aliases
+==================
+
+%B
+%include synthetic_source.inc
+%MODULE synthetic_module
+%M synthetic_module
+%#DEFINE FEATURE_FLAG
+%#ELSE
+%#ENDIF
+%z
+GO
+
+---
+
+(source_file
+  (directive
+    (directive_marker)
+    (directive_name))
+  (directive
+    (directive_marker)
+    (directive_name)
+    (directive_arguments))
+  (directive
+    (directive_marker)
+    (directive_name)
+    (directive_arguments))
+  (directive
+    (directive_marker)
+    (directive_name)
+    (directive_arguments))
+  (directive
+    (directive_marker)
+    (directive_name)
+    (directive_arguments))
+  (directive
+    (directive_marker)
+    (directive_name))
+  (directive
+    (directive_marker)
+    (directive_name))
+  (directive
+    (directive_marker)
+    (directive_name))
+  (go_command))

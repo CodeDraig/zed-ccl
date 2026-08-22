@@ -1,0 +1,215 @@
+==================
+Insert forms
+==================
+
+INSERT INTO TARGET T
+  SET T.VALUE = 1
+  WITH NOCOUNTER
+GO
+INSERT INTO TARGET
+  (ID, VALUE) VALUES (1, "one")
+GO
+INSERT INTO TARGET
+  (ID, VALUE) (
+    SELECT S.ID, S.VALUE
+    FROM SOURCE S
+    WHERE S.ACTIVE_IND = 1
+  )
+GO
+
+---
+
+(source_file
+  (insert_statement
+    (dml_table_clause
+      (dml_table_reference
+        (qualified_identifier
+          (identifier))
+        (identifier)))
+    (insert_set_clause
+      (update_assignment
+        (assignable_expression
+          (member_expression
+            (identifier)
+            (identifier)))
+        (literal
+          (integer_literal))))
+    (select_options
+      (control_option
+        (identifier))))
+  (go_command)
+  (insert_statement
+    (dml_table_clause
+      (dml_table_reference
+        (qualified_identifier
+          (identifier))))
+    (insert_values_clause
+      (identifier)
+      (identifier)
+      (literal
+        (integer_literal))
+      (literal
+        (string_literal))))
+  (go_command)
+  (insert_statement
+    (dml_table_clause
+      (dml_table_reference
+        (qualified_identifier
+          (identifier))))
+    (insert_subquery_clause
+      (identifier)
+      (identifier)
+      (select_statement
+        (select_query
+          (selection_item
+            (member_expression
+              (identifier)
+              (identifier)))
+          (selection_item
+            (member_expression
+              (identifier)
+              (identifier)))
+          (from_clause
+            (from_item
+              (table_reference
+                (qualified_identifier
+                  (identifier))
+                (identifier))))
+          (where_clause
+            (comparison_expression
+              (member_expression
+                (identifier)
+                (identifier))
+              (literal
+                (integer_literal))))))))
+  (go_command))
+
+==================
+Update and delete forms
+==================
+
+UPDATE FROM TARGET T
+SET T.VALUE = 2
+WHERE T.ID = 1
+WITH NOCOUNTER
+GO
+DELETE FROM TARGET T
+WHERE T.ID = 1
+WITH NOCOUNTER
+GO
+
+---
+
+(source_file
+  (update_statement
+    (dml_table_clause
+      (dml_table_reference
+        (qualified_identifier
+          (identifier))
+        (identifier)))
+    (update_assignment
+      (assignable_expression
+        (member_expression
+          (identifier)
+          (identifier)))
+      (literal
+        (integer_literal)))
+    (where_clause
+      (comparison_expression
+        (member_expression
+          (identifier)
+          (identifier))
+        (literal
+          (integer_literal))))
+    (select_options
+      (control_option
+        (identifier))))
+  (go_command)
+  (delete_statement
+    (dml_table_reference
+      (qualified_identifier
+        (identifier))
+      (identifier))
+    (where_clause
+      (comparison_expression
+        (member_expression
+          (identifier)
+          (identifier))
+        (literal
+          (integer_literal))))
+    (select_options
+      (control_option
+        (identifier))))
+  (go_command))
+
+==================
+Merge with parenthesized arms
+==================
+
+MERGE INTO (TARGET T) USING SOURCE S ON (S.ID = T.ID)
+WHEN MATCHED THEN (
+  UPDATE SET T.VALUE = S.VALUE WHERE T.ID = S.ID
+)
+WHEN NOT MATCHED THEN (
+  INSERT INTO TARGET (ID, VALUE) VALUES (S.ID, S.VALUE)
+)
+WITH NOCOUNTER
+GO
+
+---
+
+(source_file
+  (merge_statement
+    (dml_table_reference
+      (qualified_identifier
+        (identifier))
+      (identifier))
+    (merge_source
+      (dml_table_reference
+        (qualified_identifier
+          (identifier))
+        (identifier)))
+    (comparison_expression
+      (member_expression
+        (identifier)
+        (identifier))
+      (member_expression
+        (identifier)
+        (identifier)))
+    (merge_matched_clause
+      (update_statement
+        (update_assignment
+          (assignable_expression
+            (member_expression
+              (identifier)
+              (identifier)))
+          (member_expression
+            (identifier)
+            (identifier)))
+        (where_clause
+          (comparison_expression
+            (member_expression
+              (identifier)
+              (identifier))
+            (member_expression
+              (identifier)
+              (identifier))))))
+    (merge_not_matched_clause
+      (insert_statement
+        (dml_table_clause
+          (dml_table_reference
+            (qualified_identifier
+              (identifier))))
+        (insert_values_clause
+          (identifier)
+          (identifier)
+          (member_expression
+            (identifier)
+            (identifier))
+          (member_expression
+            (identifier)
+            (identifier)))))
+    (select_options
+      (control_option
+        (identifier))))
+  (go_command))

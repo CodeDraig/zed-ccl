@@ -1,0 +1,65 @@
+==================
+Drop create prompt batch
+==================
+
+DROP PROGRAM SAMPLE GO
+CREATE PROGRAM SAMPLE
+PROMPT "Output" = "MINE" WITH OUTDEV
+DECLARE COUNT = I4
+SET COUNT = 1
+END GO
+
+---
+
+(source_file
+  (drop_program_statement
+    (qualified_identifier
+      (identifier)))
+  (go_command)
+  (program_definition
+    (qualified_identifier
+      (identifier))
+    (prompt_statement
+      (prompt_item
+        (string_literal)
+        (literal
+          (string_literal)))
+      (prompt_with_clause
+        (identifier)))
+    (declaration
+      (variable_declaration
+        (qualified_identifier
+          (identifier))
+        (data_type)))
+    (set_statement
+      (assignable_expression
+        (identifier))
+      (literal
+        (integer_literal))))
+  (go_command))
+
+==================
+Directives and labels
+==================
+
+%include source.inc
+CREATE PROGRAM SAMPLE
+#AGAIN
+GO TO AGAIN
+END GO
+
+---
+
+(source_file
+  (directive
+    (directive_marker)
+    (directive_name)
+    (directive_arguments))
+  (program_definition
+    (qualified_identifier
+      (identifier))
+    (label_directive
+      (identifier))
+    (goto_statement
+      (identifier)))
+  (go_command))

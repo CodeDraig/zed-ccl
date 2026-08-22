@@ -1,0 +1,314 @@
+==================
+CCL select with plan join
+==================
+
+SELECT INTO "nl:"
+  PERSON_ID = P.PERSON_ID,
+  COUNT(SEQ)
+FROM PERSON P, ENCOUNTER E
+PLAN P WHERE P.ACTIVE_IND = 1
+JOIN E WHERE E.PERSON_ID = P.PERSON_ID
+GROUP BY P.PERSON_ID
+HAVING COUNT(SEQ) > 0
+ORDER BY P.PERSON_ID DESC
+WITH MAXREC = 100, NOCOUNTER
+GO
+
+---
+
+(source_file
+  (select_statement
+    (select_query
+      (into_clause
+        (literal
+          (string_literal)))
+      (selection_item
+        (selection_alias
+          (identifier)
+          (member_expression
+            (identifier)
+            (identifier))))
+      (selection_item
+        (call_expression
+          (identifier)
+          (pseudo_column)))
+      (from_clause
+        (from_item
+          (table_reference
+            (qualified_identifier
+              (identifier))
+            (identifier)))
+        (from_item
+          (table_reference
+            (qualified_identifier
+              (identifier))
+            (identifier))))
+      (plan_clause
+        (identifier)
+        (where_clause
+          (comparison_expression
+            (member_expression
+              (identifier)
+              (identifier))
+            (literal
+              (integer_literal))))
+        (join_clause
+          (identifier)
+          (where_clause
+            (comparison_expression
+              (member_expression
+                (identifier)
+                (identifier))
+              (member_expression
+                (identifier)
+                (identifier))))))
+      (group_by_clause
+        (member_expression
+          (identifier)
+          (identifier)))
+      (having_clause
+        (comparison_expression
+          (call_expression
+            (identifier)
+            (pseudo_column))
+          (literal
+            (integer_literal)))))
+    (order_by_clause
+      (order_item
+        (member_expression
+          (identifier)
+          (identifier))))
+    (select_options
+      (control_option
+        (identifier)
+        (literal
+          (integer_literal)))
+      (control_option
+        (identifier))))
+  (go_command))
+
+==================
+Single set operation
+==================
+
+SELECT PERSON_ID = P.PERSON_ID
+FROM PERSON P
+UNION (
+  SELECT PERSON_ID = E.PERSON_ID
+  FROM ENCOUNTER E
+)
+WITH RDBUNION
+GO
+
+---
+
+(source_file
+  (select_statement
+    (set_operation
+      (select_query
+        (selection_item
+          (selection_alias
+            (identifier)
+            (member_expression
+              (identifier)
+              (identifier))))
+        (from_clause
+          (from_item
+            (table_reference
+              (qualified_identifier
+                (identifier))
+              (identifier)))))
+      (set_operator)
+      (select_query
+        (selection_item
+          (selection_alias
+            (identifier)
+            (member_expression
+              (identifier)
+              (identifier))))
+        (from_clause
+          (from_item
+            (table_reference
+              (qualified_identifier
+                (identifier))
+              (identifier))))))
+    (select_options
+      (control_option
+        (identifier))))
+  (go_command))
+
+==================
+Chained nested set operations with outer clauses
+==================
+
+SELECT PERSON_ID = P.PERSON_ID
+FROM PERSON P
+WHERE P.ACTIVE_IND = 1
+UNION ALL (
+  SELECT PERSON_ID = E.PERSON_ID
+  FROM ENCOUNTER E
+  WHERE E.ACTIVE_IND = 1
+  INTERSECT (
+    SELECT PERSON_ID = O.PERSON_ID
+    FROM ORDERS O
+    WHERE O.ACTIVE_IND = 1
+  )
+)
+ORDER BY PERSON_ID
+DETAIL
+  COL 0 PERSON_ID
+WITH RDBUNION
+GO
+
+---
+
+(source_file
+  (select_statement
+    (set_operation
+      (select_query
+        (selection_item
+          (selection_alias
+            (identifier)
+            (member_expression
+              (identifier)
+              (identifier))))
+        (from_clause
+          (from_item
+            (table_reference
+              (qualified_identifier
+                (identifier))
+              (identifier))))
+        (where_clause
+          (comparison_expression
+            (member_expression
+              (identifier)
+              (identifier))
+            (literal
+              (integer_literal)))))
+      (set_operator)
+      (set_operation
+        (select_query
+          (selection_item
+            (selection_alias
+              (identifier)
+              (member_expression
+                (identifier)
+                (identifier))))
+          (from_clause
+            (from_item
+              (table_reference
+                (qualified_identifier
+                  (identifier))
+                (identifier))))
+          (where_clause
+            (comparison_expression
+              (member_expression
+                (identifier)
+                (identifier))
+              (literal
+                (integer_literal)))))
+        (set_operator)
+        (select_query
+          (selection_item
+            (selection_alias
+              (identifier)
+              (member_expression
+                (identifier)
+                (identifier))))
+          (from_clause
+            (from_item
+              (table_reference
+                (qualified_identifier
+                  (identifier))
+                (identifier))))
+          (where_clause
+            (comparison_expression
+              (member_expression
+                (identifier)
+                (identifier))
+              (literal
+                (integer_literal)))))))
+    (order_by_clause
+      (order_item
+        (identifier)))
+    (reportwriter_section
+      (detail_section
+        (col_statement
+          (literal
+            (integer_literal))
+          (identifier))))
+    (select_options
+      (control_option
+        (identifier))))
+  (go_command))
+
+==================
+Subquery and documented ANSI join block
+==================
+
+SELECT P.PERSON_ID
+FROM PERSON P,
+  (LEFT JOIN ENCOUNTER E ON (E.PERSON_ID = P.PERSON_ID))
+PLAN P WHERE EXISTS (
+  SELECT O.ORDER_ID
+  FROM ORDERS O
+  WHERE O.PERSON_ID = P.PERSON_ID
+)
+JOIN E
+GO
+
+---
+
+(source_file
+  (select_statement
+    (select_query
+      (selection_item
+        (member_expression
+          (identifier)
+          (identifier)))
+      (from_clause
+        (from_item
+          (table_reference
+            (qualified_identifier
+              (identifier))
+            (identifier)))
+        (from_item
+          (ansi_join
+            (table_reference
+              (qualified_identifier
+                (identifier))
+              (identifier))
+            (comparison_expression
+              (member_expression
+                (identifier)
+                (identifier))
+              (member_expression
+                (identifier)
+                (identifier))))))
+      (plan_clause
+        (identifier)
+        (where_clause
+          (exists_expression
+            (select_statement
+              (select_query
+                (selection_item
+                  (member_expression
+                    (identifier)
+                    (identifier)))
+                (from_clause
+                  (from_item
+                    (table_reference
+                      (qualified_identifier
+                        (identifier))
+                      (identifier))))
+                (where_clause
+                  (comparison_expression
+                    (member_expression
+                      (identifier)
+                      (identifier))
+                    (member_expression
+                      (identifier)
+                      (identifier))))))))
+        (join_clause
+          (identifier)))))
+  (go_command))

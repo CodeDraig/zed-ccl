@@ -1,0 +1,35 @@
+# Backup files
+~*
+*.bak
+*.tmp
+*.old
+
+# OS generated files
+ehthumbs.db
+Thumbs.db
+
+# Editor files
+*.sublime-project
+*.sublime-workspace
+*.komodoproject
+
+# Ignore compiled files
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Ignore packaged files
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Node dependency directories
+node_modules/

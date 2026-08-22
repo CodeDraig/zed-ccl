@@ -1,0 +1,108 @@
+==================
+Conditionals loops and case
+==================
+
+IF (A > 0)
+  SET B = 1
+ELSEIF (A = 0)
+  SET B = 0
+ELSE
+  SET B = -1
+ENDIF
+FOR (I = 1 TO 10 BY 2)
+  CALL ECHO(I)
+ENDFOR
+WHILE (I < 20)
+  SET I += 1
+ENDWHILE
+CASE (B)
+OF 1:
+  CALL ECHO("one")
+ELSE:
+  CALL ECHO("other")
+ENDCASE
+
+---
+
+(source_file
+  (if_statement
+    (comparison_expression
+      (identifier)
+      (literal
+        (integer_literal)))
+    (set_statement
+      (assignable_expression
+        (identifier))
+      (literal
+        (integer_literal)))
+    (elseif_clause
+      (comparison_expression
+        (identifier)
+        (literal
+          (integer_literal)))
+      (set_statement
+        (assignable_expression
+          (identifier))
+        (literal
+          (integer_literal))))
+    (else_clause
+      (set_statement
+        (assignable_expression
+          (identifier))
+        (unary_expression
+          (literal
+            (integer_literal))))))
+  (for_statement
+    (assignable_expression
+      (identifier))
+    (literal
+      (integer_literal))
+    (literal
+      (integer_literal))
+    (literal
+      (integer_literal))
+    (call_statement
+      (call_expression
+        (identifier)
+        (identifier))))
+  (while_statement
+    (comparison_expression
+      (identifier)
+      (literal
+        (integer_literal)))
+    (set_statement
+      (assignable_expression
+        (identifier))
+      (literal
+        (integer_literal))))
+  (case_statement
+    (identifier)
+    (case_arm
+      (literal
+        (integer_literal))
+      (call_statement
+        (call_expression
+          (identifier)
+          (literal
+            (string_literal)))))
+    (case_else
+      (call_statement
+        (call_expression
+          (identifier)
+          (literal
+            (string_literal)))))))
+
+==================
+Transaction statements
+==================
+
+COMMIT
+ROLLBACK
+GO
+
+---
+
+(source_file
+  (commit_statement)
+  (rollback_statement)
+  (go_command))
