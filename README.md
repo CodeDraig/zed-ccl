@@ -62,8 +62,7 @@ Millennium tables, columns, code sets, and PLAN relationships.
 
 ## Acknowledgments
 
-Thanks to **Justin J. Clark** and the contributors to the original
-[`CodeDraig/vscode-ccl`](https://github.com/CodeDraig/vscode-ccl) Visual Studio
+Thanks to **Justin J. Clark** and the contributors to the original Visual Studio
 Code extension. Its TextMate grammar and project history helped identify CCL
 constructs worth investigating while this parser was being developed.
 
