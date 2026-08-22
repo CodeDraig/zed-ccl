@@ -1,0 +1,13 @@
+id = "ccl"
+name = "CCL"
+version = "0.2.0"
+schema_version = 1
+authors = ["Thomas Jones"]
+description = "Modern Cerner Command Language support for Zed"
+repository = "https://github.com/CodeDraig/zed-ccl"
+languages = ["languages/ccl"]
+
+[grammars.ccl]
+repository = "https://github.com/CodeDraig/zed-ccl"
+rev = "ad5130578c840a42fc21932e0af707d55475e6d3"
+path = "tree-sitter-ccl"
