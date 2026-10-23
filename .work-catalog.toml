@@ -1,0 +1,13 @@
+# Project metadata for work-catalog. Edit deliberately; refresh imports changes.
+schema_version = 1
+
+[project]
+id = "zed-ccl-7c8742f4"
+purpose = "Zed CCL language support using a structured Tree-sitter grammar."
+state = "active"
+next_action = "Use the documented entry point to select the next task; confirm owner intent before changing lifecycle. Runtime behavior was not tested."
+tags = ["xint"]
+
+[annotations]
+tags = []
+note = ""
